@@ -196,7 +196,5 @@ poetry.toml
 
 mlruns
 .DS_Store
-data/captured_data/
-data/model_config/
-data/train_data/
-data/draw_data/
+/data/
+/deployment/mlflow/run_env/data/
