@@ -44,7 +44,9 @@ class ModelPredictor:
         model_uri = os.path.join(
             "models:/", self.config["model_name"], str(self.config["model_version"])
         )
+        print("model_uri: ", model_uri)
         self.model = mlflow.pyfunc.load_model(model_uri)
+
 
     def detect_drift(self, feature_df) -> int:
         # watch drift between coming requests and training data
@@ -93,9 +95,16 @@ class PredictorApi:
         self.predictor = predictor
         self.app = FastAPI()
 
+
         @self.app.get("/")
         async def root():
             return {"message": "hello"}
+        
+
+        @self.app.get("/health")
+        async def health():
+            pass
+
 
         @self.app.post("/phase-1/prob-1/predict")
         async def predict(data: Data, request: Request):
@@ -104,9 +113,12 @@ class PredictorApi:
             self._log_response(response)
             return response
 
+
+
     @staticmethod
     def _log_request(request: Request):
         pass
+
 
     @staticmethod
     def _log_response(response: dict):

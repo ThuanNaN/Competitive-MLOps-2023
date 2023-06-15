@@ -84,3 +84,4 @@ if __name__ == "__main__":
     ModelTrainer.train_model(
         prob_config, model_config, add_captured_data=args.add_captured_data
     )
+
