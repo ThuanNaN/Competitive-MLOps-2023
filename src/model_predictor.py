@@ -4,6 +4,8 @@ import os
 import random
 import time
 
+from typing import List, Dict
+
 import mlflow
 import pandas as pd
 import uvicorn
@@ -29,6 +31,7 @@ class ModelPredictor:
     def __init__(self, config_file_path):
         with open(config_file_path, "r") as f:
             self.config = yaml.safe_load(f)
+
         logging.info(f"model-config: {self.config}")
 
         mlflow.set_tracking_uri(AppConfig.MLFLOW_TRACKING_URI)
@@ -44,7 +47,7 @@ class ModelPredictor:
         model_uri = os.path.join(
             "models:/", self.config["model_name"], str(self.config["model_version"])
         )
-        print("model_uri: ", model_uri)
+
         self.model = mlflow.pyfunc.load_model(model_uri)
 
 
@@ -91,8 +94,8 @@ class ModelPredictor:
 
 
 class PredictorApi:
-    def __init__(self, predictor: ModelPredictor):
-        self.predictor = predictor
+    def __init__(self, predictors: Dict):
+        self.predictors = predictors
         self.app = FastAPI()
 
 
@@ -107,12 +110,19 @@ class PredictorApi:
 
 
         @self.app.post("/phase-1/prob-1/predict")
-        async def predict(data: Data, request: Request):
+        async def predict_phase1_probp1(data: Data, request: Request):
             self._log_request(request)
-            response = self.predictor.predict(data)
+            response = self.predictors["phase-1"]["prob-1"].predict(data)
             self._log_response(response)
             return response
 
+
+        @self.app.post("/phase-1/prob-2/predict")
+        async def predict_phase1_probp2(data: Data, request: Request):
+            self._log_request(request)
+            response = self.predictors["phase-1"]["prob-2"].predict(data)
+            self._log_response(response)
+            return response
 
 
     @staticmethod
@@ -129,18 +139,34 @@ class PredictorApi:
 
 
 if __name__ == "__main__":
-    default_config_path = (
-        AppPath.MODEL_CONFIG_DIR
-        / ProblemConst.PHASE1
-        / ProblemConst.PROB1
-        / "model-1.yaml"
-    ).as_posix()
+ 
+    model_cfg_path = {
+        "phase-1": {
+            "prob-1": (AppPath.MODEL_CONFIG_DIR 
+                       /ProblemConst.PHASE1
+                       / ProblemConst.PROB1 
+                       / "model-1.yaml"
+                        ).as_posix(),
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--config-path", type=str, default=default_config_path)
-    parser.add_argument("--port", type=int, default=PREDICTOR_API_PORT)
-    args = parser.parse_args()
+            "prob-2":  (AppPath.MODEL_CONFIG_DIR 
+                        /ProblemConst.PHASE1
+                       / ProblemConst.PROB2 
+                       / "model-1.yaml"
+                        ).as_posix(),
+        }
+    }
 
-    predictor = ModelPredictor(config_file_path=args.config_path)
-    api = PredictorApi(predictor)
-    api.run(port=args.port)
+    predictor_config = {
+        "phase-1": {
+            "prob-1": ModelPredictor(config_file_path=model_cfg_path["phase-1"]["prob-1"]),
+
+            "prob-2":  ModelPredictor(config_file_path=model_cfg_path["phase-1"]["prob-2"]),
+        }
+    }
+
+    api = PredictorApi(predictor_config)
+
+    api.run(port=PREDICTOR_API_PORT)
+
+
+
