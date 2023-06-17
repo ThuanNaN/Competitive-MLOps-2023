@@ -9,5 +9,5 @@ COPY deployment/model_predictor/requirements.txt .
 RUN pip install --upgrade wheel setuptools pip
 RUN pip install -r requirements.txt
 
-COPY ./src /sample_solution/src
-WORKDIR /sample_solution
+COPY ./src /solution/src
+WORKDIR /solution
