@@ -12,7 +12,7 @@ mlflow_down:
 
 # predictor
 predictor_up:
-	bash deployment/deploy.sh run_predictor 5040
+	PORT=5040 docker-compose -f deployment/model_predictor/docker-compose.yml up -d
 
 predictor_down:
 	PORT=5040 docker-compose -f deployment/model_predictor/docker-compose.yml down

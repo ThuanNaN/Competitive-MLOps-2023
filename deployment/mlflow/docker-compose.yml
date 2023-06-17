@@ -2,7 +2,7 @@ version: "3"
 services:
   mlflow:
     build:
-      context: mlflow/
+      context: docker/mlflow/
     command:
       - bash
       - -c

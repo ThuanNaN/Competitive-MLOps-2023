@@ -1,13 +1,16 @@
 version: "3.7"
 services:
   model_predictor:
-    image: ${IMAGE_NAME}:${IMAGE_TAG}
+    build: 
+      context: ../../
+      dockerfile: ./docker/model_predictor/Dockerfile
+    image: model_predictor
     restart: on-failure
     volumes:
-      - ../../data/raw_data:/sample_solution/data/raw_data
-      - ../../data/train_data:/sample_solution/data/train_data
-      - ../../data/model_config:/sample_solution/data/model_config
-      - ../../data/captured_data:/sample_solution/data/captured_data
+      - ../../data/raw_data:/solution/data/raw_data
+      - ../../data/train_data:/solution/data/train_data
+      - ../../data/model_config:/solution/data/model_config
+      - ../../data/captured_data:/solution/data/captured_data
     ports:
       - ${PORT}:8000
     environment:
