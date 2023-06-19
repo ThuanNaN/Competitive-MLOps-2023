@@ -6,14 +6,15 @@ import numpy as np
 import xgboost as xgb
 from mlflow.models.signature import infer_signature
 from sklearn.metrics import roc_auc_score
+from raw_data_processor import RawDataProcessor
 
-from problem_config import (
+from config.problem_config import (
     ProblemConfig,
     ProblemConst,
     get_prob_config,
 )
-from raw_data_processor import RawDataProcessor
-from utils import AppConfig
+
+from config.app_config import AppConfig
 
 
 class ModelTrainer:

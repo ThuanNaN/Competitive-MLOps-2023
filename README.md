@@ -85,11 +85,11 @@ This repository is the sample solution for MLOps Marathon 2023.
 
         # curl in another terminal
         #prob-1
-        curl -X POST http://localhost:8000/phase-1/prob-1/predict -H "Content-Type: application/json" -d @data/curl/phase-1/prob-1/payload-1.json
+        curl -X POST http://localhost:8000/phase-1/prob-1/predict -H "Content-Type: application/json" -d @test/curl/phase-1/prob-1/payload-1.json
 
 
         #prob-2
-        curl -X POST http://localhost:8000/phase-1/prob-2/predict -H "Content-Type: application/json" -d @data/curl/phase-1/prob-2/payload-1.json
+        curl -X POST http://localhost:8000/phase-1/prob-2/predict -H "Content-Type: application/json" -d @test/curl/phase-1/prob-2/payload-1.json
 
 
         # stop the predictor above

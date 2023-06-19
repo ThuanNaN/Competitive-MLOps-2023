@@ -3,7 +3,7 @@ import logging
 import numpy as np
 import pandas as pd
 from sklearn.cluster import MiniBatchKMeans
-from problem_config import ProblemConfig, ProblemConst, get_prob_config
+from config.problem_config import ProblemConfig, ProblemConst, get_prob_config
 
 
 def label_captured_data(prob_config: ProblemConfig):

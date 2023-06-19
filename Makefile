@@ -11,6 +11,7 @@ mlflow_down:
 	docker compose -f deployment/mlflow/docker-compose.yml down
 
 # predictor
+# export MLFLOW_TRACKING_URI=http://localhost:5000
 predictor_up:
 	PORT=5040 docker compose -f deployment/model_predictor/docker-compose.yml up -d
 
@@ -22,7 +23,7 @@ predictor_restart:
 	PORT=5040 docker compose -f deployment/model_predictor/docker-compose.yml start
 
 predictor_curl:
-	curl -X POST http://localhost:5040/phase-1/prob-1/predict -H "Content-Type: application/json" -d @data/curl/phase-1/prob-1/payload-1.json
-	curl -X POST http://localhost:5040/phase-1/prob-1/predict -H "Content-Type: application/json" -d @data/curl/phase-1/prob-1/payload-2.json
-	curl -X POST http://localhost:5040/phase-1/prob-2/predict -H "Content-Type: application/json" -d @data/curl/phase-1/prob-2/payload-1.json
+	curl -X POST http://localhost:5040/phase-1/prob-1/predict -H "Content-Type: application/json" -d @test/curl/phase-1/prob-1/payload-1.json
+	curl -X POST http://localhost:5040/phase-1/prob-1/predict -H "Content-Type: application/json" -d @test/curl/phase-1/prob-1/payload-2.json
+	curl -X POST http://localhost:5040/phase-1/prob-2/predict -H "Content-Type: application/json" -d @test/curl/phase-1/prob-2/payload-1.json
 

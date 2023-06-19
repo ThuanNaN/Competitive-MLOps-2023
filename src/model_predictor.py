@@ -4,7 +4,7 @@ import os
 import random
 import time
 
-from typing import List, Dict
+from typing import Dict
 
 import mlflow
 import pandas as pd
@@ -14,9 +14,10 @@ from fastapi import FastAPI, Request
 from pandas.util import hash_pandas_object
 from pydantic import BaseModel
 
-from problem_config import ProblemConst, create_prob_config
+from config.problem_config import ProblemConst, create_prob_config
 from raw_data_processor import RawDataProcessor
-from utils import AppConfig, AppPath
+from utils import AppPath
+from config.app_config import AppConfig
 
 PREDICTOR_API_PORT = 8000
 
