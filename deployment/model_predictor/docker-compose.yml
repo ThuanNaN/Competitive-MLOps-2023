@@ -4,7 +4,6 @@ services:
     build: 
       context: ../../
       dockerfile: ./docker/model_predictor/Dockerfile
-    image: model_predictor
     restart: on-failure
     volumes:
       - ../../data/raw_data:/solution/data/raw_data
