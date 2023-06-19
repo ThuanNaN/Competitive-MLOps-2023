@@ -35,6 +35,7 @@ class ModelPredictor:
 
         logging.info(f"model-config: {self.config}")
 
+        logging.info(f"MLFLOW_TRACKING_URI: {AppConfig.MLFLOW_TRACKING_URI}")
         mlflow.set_tracking_uri(AppConfig.MLFLOW_TRACKING_URI)
 
         self.prob_config = create_prob_config(

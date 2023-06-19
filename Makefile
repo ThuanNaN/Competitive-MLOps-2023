@@ -11,7 +11,6 @@ mlflow_down:
 	docker compose -f deployment/mlflow/docker-compose.yml down
 
 # predictor
-# export MLFLOW_TRACKING_URI=http://localhost:5000
 predictor_up:
 	PORT=5040 docker compose -f deployment/model_predictor/docker-compose.yml up -d
 

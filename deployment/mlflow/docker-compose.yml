@@ -4,6 +4,7 @@ services:
     build:
       context: ../../
       dockerfile: ./docker/mlflow/Dockerfile
+    container_name: mlflow
     command:
       - bash
       - -c
